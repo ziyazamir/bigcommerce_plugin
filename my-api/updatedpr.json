@@ -1,0 +1,8 @@
+{
+  "created_at": 1644431195,
+  "store_id": "1002249745",
+  "producer": "stores/pxint2anco",
+  "scope": "store/product/updated",
+  "hash": "c6aa3c2a59050d4b16fd695304dfc5c0bf8d84e5",
+  "data": { "type": "product", "id": 107 }
+}
