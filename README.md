@@ -33,7 +33,10 @@ $app_domain = "your_domain.com";
 $app_id = "YOUR-APP-ID"; 
 ```
 
-
+## Sample API for getting product details
+```bash
+ https://YOUR_DOMAIN.com/my-api/getproduct.php?id=112&store=big-store-y1.mybigcommerce.com
+```
 
 
 ## Tech
