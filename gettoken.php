@@ -8,6 +8,8 @@ $client_id = 'YOUR-CLIENT-ID';
 
 $client_secret = 'YOUR-CLIENT-SECRET';
 
+$app_id = "YOUR-APP-ID"; // using this method to redirect to home page of app after outh if you find better solution please share to me.
+
 $redirect_uri = 'https://' . $app_domain . '/gettoken.php';  //app_domain is present in inlcudes/function.php
 
 $postfields = array(
@@ -250,7 +252,7 @@ if ($n > 0) {
         echo "<script> alert('updated succesfully');</script>";
         // header("Refresh:0");
         // header("location:index.php");
-        header("location:https://store-" . $storeHash . ".mybigcommerce.com/manage/app/37237"); //change it after first app installation
+        header("location:https://store-" . $storeHash . ".mybigcommerce.com/manage/app/$app_id"); //change it after first app installation
     } else {
 
         echo "<script> alert('something went wrong in updation');</script>";
@@ -268,7 +270,7 @@ if ($n > 0) {
         echo "<script> alert('inserted succesfully');</script>";
         // header("Refresh:0");
         // header("location:index.php");
-        header("location:https://store-" . $storeHash . ".mybigcommerce.com/manage/app/37237");
+        header("location:https://store-" . $storeHash . ".mybigcommerce.com/manage/app/$app_id");
         // header("location:https://" . $shop . "/admin/apps");
     } else {
 
