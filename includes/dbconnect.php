@@ -2,27 +2,11 @@
 
 $username = "bigcommerceapp";
 
-
-
-$password = "Rts1wTZFUZsebPs";
-
-
+$password = "password";
 
 $host = "localhost";
 
-
-
 $dbname = "bigcommerceapp";
-
-
-
-
-
-// global $pdo;
-
-
-
-
 
 $dsn = "mysql:host=$host;dbname=$dbname";
 
@@ -31,10 +15,10 @@ $dsn = "mysql:host=$host;dbname=$dbname";
 $pdo = new PDO($dsn, $username, $password);
 
 
-							// $sql="SELECT * FROM main";
-							// $row = $pdo->query($sql);
-							// $publishers = $row->fetchAll(PDO::FETCH_ASSOC);
-       //                       print_r($publishers);
+// $sql="SELECT * FROM main";
+// $row = $pdo->query($sql);
+// $publishers = $row->fetchAll(PDO::FETCH_ASSOC);
+//                       print_r($publishers);
 function test_input($data)
 
 {
@@ -54,22 +38,19 @@ function test_input($data)
 
 
     return $data;
-
 }
 
 
 
-$meta[1] = "This Website is an ultimate source of codinginfotech and start-ups around the world. It covers all upcoming technology and start-ups in the world.";
+$meta[1] = "some meta data";
 
 
 
-$title[1] = "Codinginfotech";
+$title[1] = "title";
 
 
 
 if ($pdo) {
-
-
 
     // echo "You are connected";
 
@@ -78,6 +59,4 @@ if ($pdo) {
 
 
     echo "Sorry , You are not connected";
-
 }
-

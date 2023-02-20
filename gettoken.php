@@ -4,11 +4,11 @@ include_once "includes/dbconnect.php";
 
 include_once "includes/function.php";
 
-$client_id = 'prfjlcew9txt2u5vhfs3jrqgg57ve57';
+$client_id = 'YOUR-CLIENT-ID';
 
-$client_secret = 'a357dd574140fdfd7e5c17ad8aadb204b759ebd66d3374c969a3f20476a1031f';
+$client_secret = 'YOUR-CLIENT-SECRET';
 
-$redirect_uri = 'https://' . $app_domain . '/gettoken.php';
+$redirect_uri = 'https://' . $app_domain . '/gettoken.php';  //app_domain is present in inlcudes/function.php
 
 $postfields = array(
 
@@ -28,7 +28,7 @@ $postfields = array(
 
 );
 
-print_r($postfields);
+// print_r($postfields);
 
 $postfields = http_build_query($postfields);
 
@@ -36,9 +36,6 @@ $ch = curl_init();
 
 curl_setopt($ch, CURLOPT_URL, 'https://login.bigcommerce.com/oauth2/token');
 
-// curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
-
-//curl_setopt( $ch, CURLOPT_URL, $api_url );
 
 curl_setopt($ch, CURLOPT_HTTPHEADER, array('Accept: application/json'));
 
@@ -66,11 +63,6 @@ $result = json_decode($response, JSON_PRETTY_PRINT);
 
 //echo " result:" . $result;
 
-//echo gettype($result);
-
-// print_r("response" . $response);
-
-// print_r("error" . $error_msg);
 
 $storeHash = str_replace('stores/', '', $_GET['context']);
 
@@ -106,43 +98,11 @@ echo $store;
 
 
 
-// adding jquery 
+// adding script-tag to the store
 
 $data = '{
 
-    "name": "Jquery",
-
-    "description": "jquery file",
-
-    "src": "https://code.jquery.com/jquery-3.6.0.min.js",
-
-    "auto_uninstall": true,
-
-    "load_method": "default",
-
-    "location": "head",
-
-    "visibility": "all_pages",
-
-    "kind": "src",
-
-    "consent_category": "essential"
-
-  }';
-
-$script_tag = api_call($access_token, $storeHash, "/v3/content/scripts", $data, 'POST');
-
-$script_tag = json_decode($script_tag['response'], true);
-
-//print_r($script_tag);
-
-
-
-// add script-tag 
-
-$data = '{
-
-    "name": "Designo-script",
+    "name": "App-script",
 
     "description": "Add Customize Functionalities",
 
@@ -172,7 +132,7 @@ $script_tag = json_decode($script_tag['response'], true);
 
 
 
-//creating hook
+//--------------creating hook for updated product------------
 
 $hook = '{
 
@@ -216,7 +176,7 @@ $order_hook = api_call($access_token, $storeHash, "/v3/hooks", $orderhook, 'POST
 
 $order_hook = json_decode($order_hook['response'], true);
 
-//order update webhook
+//--------------order update webhook----------------------
 
 $orderupdatehook = '{
 
@@ -236,7 +196,7 @@ $update_order_hook = json_decode($update_order_hook['response'], true);
 
 //print_r($update_order_hook);
 
-// creating page designo
+// creating a page through api
 $curl = curl_init();
 
 curl_setopt_array($curl, array(
@@ -247,7 +207,7 @@ curl_setopt_array($curl, array(
     CURLOPT_TIMEOUT => 30,
     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
     CURLOPT_CUSTOMREQUEST => "POST",
-    CURLOPT_POSTFIELDS => "{\"name\":\"designo\",\"body\":\"<!DOCTYPE html><html lang=en><head><meta charset=UTF-8><meta http-equiv=X-UA-Compatible content=IE=edge><meta name='viewport' content='user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi'><title>Design Online Blue Wave Printing</title></head><body style='margin:0'></body><script src='https://code.jquery.com/jquery-3.6.0.min.js' integrity='sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=' crossorigin='anonymous'></script><script src='https://". $app_domain ."/includes/script.js' ></script></html>\",\"is_visible\":false,\"parent_id\":0,\"sort_order\":0,\"type\":\"raw\",\"is_homepage\":false,\"is_customers_only\":false,\"search_keywords\":\"\",\"has_mobile_version\":true,\"mobile_body\":\"\",\"content_type\":\"text/html\"}",
+    CURLOPT_POSTFIELDS => "{\"name\":\"my_page\",\"body\":\"<!DOCTYPE html><html lang=en><head><meta charset=UTF-8><meta http-equiv=X-UA-Compatible content=IE=edge><meta name='viewport' content='user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi'><title>App Page</title></head><body style='margin:0'></body><script src='https://code.jquery.com/jquery-3.6.0.min.js' integrity='sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=' crossorigin='anonymous'></script><script src='https://" . $app_domain . "/includes/script.js' ></script></html>\",\"is_visible\":false,\"parent_id\":0,\"sort_order\":0,\"type\":\"raw\",\"is_homepage\":false,\"is_customers_only\":false,\"search_keywords\":\"\",\"has_mobile_version\":true,\"mobile_body\":\"\",\"content_type\":\"text/html\"}",
     CURLOPT_HTTPHEADER => array(
         "accept: application/json",
         "content-type: application/json",
@@ -290,7 +250,7 @@ if ($n > 0) {
         echo "<script> alert('updated succesfully');</script>";
         // header("Refresh:0");
         // header("location:index.php");
-        header("location:https://store-" . $storeHash . ".mybigcommerce.com/manage/app/37237");
+        header("location:https://store-" . $storeHash . ".mybigcommerce.com/manage/app/37237"); //change it after first app installation
     } else {
 
         echo "<script> alert('something went wrong in updation');</script>";

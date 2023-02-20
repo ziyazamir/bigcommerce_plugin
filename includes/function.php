@@ -1,7 +1,6 @@
 <?php
 include_once "dbconnect.php";
-$designo_url = "shopify.designo.software";
-$app_domain = "bigcommerceapp.designo.software/v1_ppk";
+$app_domain = "your_domain.com";
 if (!isset($index)) {
     header('Access-Control-Allow-Origin: *');
 
@@ -36,19 +35,7 @@ function gettoken($store)
         return false;
     }
 }
-function geturl($store)
-{
-    global $pdo;
-    $sql = "SELECT * FROM users WHERE store='$store'";
-    // echo $sql;
-    $stmt = $pdo->query($sql);
-    if ($value = $stmt->fetch()) {
-        // return $value['token'], $value['store_hash']; 
-        return $value['link'];
-    } else {
-        return false;
-    }
-}
+
 function gettoken_byhash($hash)
 {
     global $pdo;
@@ -63,23 +50,6 @@ function gettoken_byhash($hash)
     }
 }
 
-function insert_users($selected, $url, $shop, $hash)
-{
-    global $pdo;
-    $query = "INSERT INTO users (selected,link,store,store_hash) VALUES('$selected','$url','$shop','$hash')";
-    echo $query;
-    $stmt = $pdo->prepare($query);
-    $res = $stmt->execute();
-    if ($res) {
-
-        echo "<script> alert('added succesfully');</script>";
-    } else {
-        echo "<script> alert('something went wrong');</script>";
-        // echo PDOException;
-    }
-    header("Refresh:0");
-}
-
 
 
 
@@ -88,10 +58,7 @@ function api_call($token, $hash, $api_endpoint, $query = array(), $method = 'GET
 
     // Build URL
     $url = "https://api.bigcommerce.com/stores/" . $hash . $api_endpoint;
-    // if (!is_null($query) && in_array($method, array('GET',     'DELETE'))) $url = $url . "?" . http_build_query($query);
-    // echo $url;
-    // print_r($query);
-    // Configure cURL
+
     $curl = curl_init($url);
     curl_setopt($curl, CURLOPT_HEADER, TRUE);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
@@ -100,7 +67,7 @@ function api_call($token, $hash, $api_endpoint, $query = array(), $method = 'GET
     curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
     // curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 3);
     // curl_setopt($curl, CURLOPT_SSLVERSION, 3);
-    curl_setopt($curl, CURLOPT_USERAGENT, 'My New Designo App v.1');
+    curl_setopt($curl, CURLOPT_USERAGENT, 'My New App v.1');
     curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 30);
     curl_setopt($curl, CURLOPT_TIMEOUT, 30);
     curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $method);
